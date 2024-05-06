@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Box, FlatList, ScrollView, VStack } from "native-base";
+import { Box, Center, FlatList, ScrollView, VStack } from "native-base";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
@@ -25,22 +25,22 @@ export default function HomeScreen() {
 
   if (trendingMoviesIsLoading || allMoviesIsLoading) {
     return (
-      <Box flex={1}>
+      <Center flex={1}>
         <Loading />
-      </Box>
+      </Center>
     );
   }
 
   if (trendingMoviesError || allMoviesError) {
     return (
-      <VStack flex={1}>
+      <Center flex={1}>
         <CustomText fontFamilyProps="BOLD">
           {trendingMoviesError?.message ?? "Something went wrong"}
         </CustomText>
         <CustomText fontFamilyProps="BOLD">
           {allMoviesError?.message ?? "Something went wrong"}
         </CustomText>
-      </VStack>
+      </Center>
     );
   }
 

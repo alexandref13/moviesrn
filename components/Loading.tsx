@@ -7,9 +7,9 @@ type LoadingProps = {
 export function Loading({ hasHeading = true }: LoadingProps) {
   return (
     <HStack space={2} justifyContent="center">
-      <Spinner color="emerald.500" />
+      <Spinner color="info.700" />
       {hasHeading && (
-        <Heading color="emerald.500" fontSize="md">
+        <Heading color="info.700" fontSize="md">
           Loading
         </Heading>
       )}

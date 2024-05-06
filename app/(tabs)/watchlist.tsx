@@ -1,5 +1,5 @@
 import { View } from "react-native";
 
-export default function WishListScreen() {
+export default function WatchListScreen() {
   return <View />;
 }

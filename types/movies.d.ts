@@ -4,4 +4,5 @@ export type Movie = {
   overview: string,
   poster_path: string,
   release_date: string,
+  status: string
 }

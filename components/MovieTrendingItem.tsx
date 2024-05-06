@@ -4,18 +4,13 @@ import { Image, Box } from "native-base";
 import { Movie } from "@/types/movies";
 
 import { CustomText } from "./CustomText";
-import { Link } from "expo-router";
 
 type MovieTrendingItemProps = {
   movie: Movie;
-  imageWidth?: number;
-  imageHeight?: number;
   imageStyle?: StyleProp<ImageStyle>;
 };
 
 export function MovieTrendingItem({
-  imageHeight = 500,
-  imageWidth = 400,
   imageStyle,
   movie,
 }: MovieTrendingItemProps) {
@@ -31,8 +26,8 @@ export function MovieTrendingItem({
       />
 
       <CustomText
-        fontFamilyProps="MEDIUM"
-        fontSize="2xl"
+        fontFamilyProps="REGULAR"
+        fontSize="xl"
         textAlign="center"
         numberOfLines={1}
         maxWidth={"sm"}

@@ -1,4 +1,4 @@
-import { Box } from "native-base";
+import { Box, Center } from "native-base";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,21 +17,23 @@ export default function MovieDetails() {
 
   if (movieIsLoading) {
     return (
-      <Box flex={1}>
+      <Center flex={1} alignItems="center" justifyContent="center">
         <Loading />
-      </Box>
+      </Center>
     );
   }
 
   if (movieError) {
     return (
-      <Box flex={1}>
+      <Center flex={1} alignItems="center" justifyContent="center">
         <CustomText fontFamilyProps="BOLD">
           {movieError.message ?? "Something went wrong"}
         </CustomText>
-      </Box>
+      </Center>
     );
   }
+
+  console.log(movie?.id);
 
   return (
     <Box>
