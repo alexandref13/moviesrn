@@ -1,5 +1,12 @@
+import { CustomText } from "@/components/CustomText";
 import { View } from "react-native";
 
 export default function TabOneScreen() {
-  return <View></View>;
+  return (
+    <View>
+      <CustomText fontSize="lg" fontFamilyProps="BOLD">
+        Teste
+      </CustomText>
+    </View>
+  );
 }
