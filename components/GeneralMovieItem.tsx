@@ -22,15 +22,23 @@ export function GeneralMovieItem({
     <Box>
       <Image
         source={{
-          uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+          uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
         }}
-        style={[{ borderRadius: 16, objectFit: "fill" }, imageStyle]}
+        style={[
+          { borderRadius: 16, objectFit: "fill", aspectRatio: 4 / 3 },
+          imageStyle,
+        ]}
         alt={`Logo from ${movie.title}`}
         width={imageWidth}
         height={imageHeight}
       />
 
-      <CustomText fontFamilyProps="REGULAR" fontSize="md" overflow="hidden">
+      <CustomText
+        fontFamilyProps="REGULAR"
+        fontSize="md"
+        numberOfLines={1}
+        style={{ maxWidth: 200 }}
+      >
         {movie.title}
       </CustomText>
     </Box>

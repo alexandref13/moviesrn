@@ -43,8 +43,8 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView flex={1} padding={2}>
-      <VStack flex={1}>
+    <ScrollView padding={2} showsVerticalScrollIndicator={false}>
+      <VStack>
         <CustomText fontFamilyProps="BOLD" fontSize="lg" paddingBottom={2}>
           Trending Movies
         </CustomText>
@@ -52,20 +52,22 @@ export default function HomeScreen() {
           data={trendingMovies}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            gap: 4,
-          }}
+          ItemSeparatorComponent={() => <Box paddingRight={2} />}
           renderItem={({ item }) => <MovieTrendingItem movie={item} />}
         />
       </VStack>
 
-      <VStack>
+      <VStack paddingTop={2}>
+        <CustomText fontFamilyProps="BOLD" fontSize="lg" paddingBottom={2}>
+          Recent Movies
+        </CustomText>
         <FlatList
           data={allMovies}
           horizontal
           showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Box paddingRight={2} />}
           contentContainerStyle={{
-            gap: 16,
+            paddingBottom: 24,
           }}
           renderItem={({ item }) => <GeneralMovieItem movie={item} />}
         />

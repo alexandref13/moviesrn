@@ -1,9 +1,10 @@
-import { ImageStyle, StyleProp } from "react-native";
+import { ImageStyle, Pressable, StyleProp } from "react-native";
 import { Image, Box } from "native-base";
 
 import { Movie } from "@/types/movies";
 
 import { CustomText } from "./CustomText";
+import { Link } from "expo-router";
 
 type MovieTrendingItemProps = {
   movie: Movie;
@@ -22,19 +23,19 @@ export function MovieTrendingItem({
     <Box>
       <Image
         source={{
-          uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+          uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
         }}
-        style={[{ borderRadius: 16 }, imageStyle]}
+        style={[{ borderRadius: 16, aspectRatio: 3 / 4 }, imageStyle]}
         alt={`Logo from ${movie.title}`}
-        width={imageWidth}
-        height={imageHeight}
+        width="sm"
       />
 
       <CustomText
-        flex={1}
         fontFamilyProps="MEDIUM"
         fontSize="2xl"
         textAlign="center"
+        numberOfLines={1}
+        maxWidth={"sm"}
       >
         {movie.title}
       </CustomText>
