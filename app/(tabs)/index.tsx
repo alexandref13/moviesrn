@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Box, FlatList, VStack } from "native-base";
+import { Box, FlatList, ScrollView, VStack } from "native-base";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
 import { getAllMovies, getTrendingMovies } from "@/repository/movies";
+
+import { MovieTrendingItem } from "@/components/MovieTrendingItem";
+import { GeneralMovieItem } from "@/components/GeneralMovieItem";
 
 export default function HomeScreen() {
   const {
@@ -40,31 +43,33 @@ export default function HomeScreen() {
   }
 
   return (
-    <Box flex={1}>
-      <CustomText fontFamilyProps="BOLD">Trending Movies</CustomText>
-      <FlatList
-        data={trendingMovies}
-        horizontal
-        renderItem={({ item }) => {
-          return (
-            <CustomText key={item.id} fontFamilyProps="REGULAR">
-              {item.title}
-            </CustomText>
-          );
-        }}
-      />
+    <ScrollView flex={1} padding={2}>
+      <VStack flex={1}>
+        <CustomText fontFamilyProps="BOLD" fontSize="lg" paddingBottom={2}>
+          Trending Movies
+        </CustomText>
+        <FlatList
+          data={trendingMovies}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            gap: 4,
+          }}
+          renderItem={({ item }) => <MovieTrendingItem movie={item} />}
+        />
+      </VStack>
 
-      <FlatList
-        data={allMovies}
-        horizontal
-        renderItem={({ item }) => {
-          return (
-            <CustomText key={item.id} fontFamilyProps="REGULAR">
-              {item.title}
-            </CustomText>
-          );
-        }}
-      />
-    </Box>
+      <VStack>
+        <FlatList
+          data={allMovies}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            gap: 16,
+          }}
+          renderItem={({ item }) => <GeneralMovieItem movie={item} />}
+        />
+      </VStack>
+    </ScrollView>
   );
 }
