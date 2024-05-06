@@ -7,6 +7,8 @@ import { getAllMovies, getTrendingMovies } from "@/repository/movies";
 
 import { MovieTrendingItem } from "@/components/MovieTrendingItem";
 import { GeneralMovieItem } from "@/components/GeneralMovieItem";
+import { Link } from "expo-router";
+import { Pressable } from "react-native";
 
 export default function HomeScreen() {
   const {
@@ -53,7 +55,19 @@ export default function HomeScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box paddingRight={2} />}
-          renderItem={({ item }) => <MovieTrendingItem movie={item} />}
+          renderItem={({ item }) => (
+            <Link
+              href={{
+                pathname: "/movie/[id]",
+                params: { id: item.id },
+              }}
+              asChild
+            >
+              <Pressable>
+                <MovieTrendingItem movie={item} />
+              </Pressable>
+            </Link>
+          )}
         />
       </VStack>
 

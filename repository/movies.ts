@@ -3,7 +3,7 @@ import { Movie } from "@/types/movies";
 
 export async function getTrendingMovies(): Promise<Movie[]> {
   const response = await api.get(
-    "trending/movie/week?language=pt-Br"
+    "/trending/movie/week?language=pt-Br"
   );
 
   return response.data.results;
@@ -15,4 +15,12 @@ export async function getAllMovies(): Promise<Movie[]> {
   );
 
   return response.data.results;
+}
+
+export async function getAMovie(id: string): Promise<Movie> {
+  const response = await api.get(
+    `/movie/${id}?language=pt-BR`
+  );
+
+  return response.data;
 }
