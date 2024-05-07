@@ -38,7 +38,7 @@ export default function WatchListScreen() {
     <FlatList
       data={watchlist}
       renderItem={({ item }) => <WatchListItem movie={item} />}
-      contentContainerStyle={{ flex: 1 }}
+      contentContainerStyle={{ paddingBottom: 24 }}
       ItemSeparatorComponent={() => <Divider marginY={2} />}
       ListFooterComponent={() => <Divider marginY={2} />}
       ListEmptyComponent={() => (

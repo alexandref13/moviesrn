@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   useTheme,
+  useToast,
 } from "native-base";
 import { Stack, useLocalSearchParams } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -19,14 +20,13 @@ import {
   toggleMovieToWatchList,
 } from "@/repository/watchlist";
 import { Movie } from "@/types/movies";
-import { useState } from "react";
 
 export default function MovieDetails() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const queryClient = useQueryClient();
   const { id }: { id: string } = useLocalSearchParams();
+
   const { colors } = useTheme();
+  const toast = useToast();
 
   const {
     data: movie,
@@ -68,6 +68,13 @@ export default function MovieDetails() {
       toggleMovieToWatchList(id, hasIdInWatchlistMovies(watchlist)),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["movies:watchlist"] });
+      toast.show({
+        title: hasIdInWatchlistMovies(watchlist)
+          ? "Movie removed of Watchlist"
+          : "Movie added to Watchlist",
+        placement: "top",
+        duration: 1000,
+      });
     },
   });
 
