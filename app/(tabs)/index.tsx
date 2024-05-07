@@ -53,6 +53,7 @@ export default function HomeScreen() {
         <FlatList
           data={trendingMovies}
           horizontal
+          initialNumToRender={2}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box paddingRight={2} />}
           renderItem={({ item }) => (
@@ -78,6 +79,7 @@ export default function HomeScreen() {
         <FlatList
           data={allMovies}
           horizontal
+          initialNumToRender={5}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box paddingRight={4} />}
           contentContainerStyle={{
