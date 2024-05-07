@@ -34,6 +34,14 @@ export default function WatchListScreen() {
     );
   }
 
+  if (watchlist && watchlist.length === 0) {
+    return (
+      <Center flex={1}>
+        <CustomText>Add a movie to your WatchList</CustomText>
+      </Center>
+    );
+  }
+
   return (
     <FlatList
       data={watchlist}
@@ -41,11 +49,6 @@ export default function WatchListScreen() {
       contentContainerStyle={{ paddingBottom: 24 }}
       ItemSeparatorComponent={() => <Divider marginY={2} />}
       ListFooterComponent={() => <Divider marginY={2} />}
-      ListEmptyComponent={() => (
-        <Box flex={1} alignItems="center" justifyContent="center">
-          <CustomText>Add a movie to your WatchList</CustomText>
-        </Box>
-      )}
     />
   );
 }
