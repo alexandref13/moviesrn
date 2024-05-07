@@ -1,9 +1,10 @@
-import { Box, Center, FlatList } from "native-base";
+import { Box, Center, Divider, FlatList } from "native-base";
 import { useQuery } from "@tanstack/react-query";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
 import { getWatchListMovies } from "@/repository/watchlist";
+import { WatchListItem } from "@/components/WatchListItem";
 
 export default function WatchListScreen() {
   const {
@@ -36,8 +37,10 @@ export default function WatchListScreen() {
   return (
     <FlatList
       data={watchlist}
-      renderItem={({ item }) => <CustomText>{item.title}</CustomText>}
+      renderItem={({ item }) => <WatchListItem movie={item} />}
       contentContainerStyle={{ flex: 1 }}
+      ItemSeparatorComponent={() => <Divider marginY={2} />}
+      ListFooterComponent={() => <Divider marginY={2} />}
       ListEmptyComponent={() => (
         <Box flex={1} alignItems="center" justifyContent="center">
           <CustomText>Add a movie to your WatchList</CustomText>
