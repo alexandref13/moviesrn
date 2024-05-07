@@ -79,7 +79,7 @@ export default function HomeScreen() {
           data={allMovies}
           horizontal
           showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Box paddingRight={2} />}
+          ItemSeparatorComponent={() => <Box paddingRight={4} />}
           contentContainerStyle={{
             paddingBottom: 24,
           }}

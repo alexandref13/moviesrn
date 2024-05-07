@@ -25,7 +25,7 @@ export function GeneralMovieItem({
           uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
         }}
         style={[
-          { borderRadius: 16, objectFit: "fill", aspectRatio: 4 / 3 },
+          { borderRadius: 16, objectFit: "fill", aspectRatio: 3 / 5 },
           imageStyle,
         ]}
         alt={`Logo from ${movie.title}`}
@@ -37,7 +37,7 @@ export function GeneralMovieItem({
         fontFamilyProps="REGULAR"
         fontSize="md"
         numberOfLines={1}
-        style={{ maxWidth: 200 }}
+        style={{ maxWidth: 120 }}
       >
         {movie.title}
       </CustomText>
