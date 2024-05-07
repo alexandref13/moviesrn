@@ -10,7 +10,12 @@ import {
 } from "native-base";
 import { Stack, useLocalSearchParams } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { CustomText } from "@/components/CustomText";
 import { getAMovie } from "@/repository/movies";
@@ -35,13 +40,17 @@ export default function MovieDetails() {
   } = useQuery({ queryKey: ["movie", id], queryFn: () => getAMovie(id) });
 
   const {
-    data: watchlist,
+    data,
     isLoading: watchlistIsLoading,
     error: watchlistError,
-  } = useQuery({
+  } = useInfiniteQuery({
     queryKey: ["movies:watchlist"],
-    queryFn: getWatchListMovies,
+    queryFn: ({ pageParam }) => getWatchListMovies(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (_, pages) => pages.length + 1,
   });
+
+  const watchlist = data?.pages.flat();
 
   function hasIdInWatchlistMovies(watchList: Movie[] | undefined) {
     if (!watchList) {
