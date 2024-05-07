@@ -1,9 +1,10 @@
 import { ImageStyle, Pressable, StyleProp } from "react-native";
-import { Image, Box } from "native-base";
+import { Image } from "native-base";
 
 import { Movie } from "@/types/movies";
 
 import { CustomText } from "./CustomText";
+import { Link } from "expo-router";
 
 type MovieTrendingItemProps = {
   movie: Movie;
@@ -15,25 +16,33 @@ export function MovieTrendingItem({
   movie,
 }: MovieTrendingItemProps) {
   return (
-    <Box>
-      <Image
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-        }}
-        style={[{ borderRadius: 16, aspectRatio: 3 / 4 }, imageStyle]}
-        alt={`Logo from ${movie.title}`}
-        width="sm"
-      />
+    <Link
+      href={{
+        pathname: "/movie/[id]",
+        params: { id: movie.id },
+      }}
+      asChild
+    >
+      <Pressable>
+        <Image
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+          }}
+          style={[{ borderRadius: 16, aspectRatio: 3 / 4 }, imageStyle]}
+          alt={`Logo from ${movie.title}`}
+          width="sm"
+        />
 
-      <CustomText
-        fontFamilyProps="REGULAR"
-        fontSize="xl"
-        textAlign="center"
-        numberOfLines={1}
-        maxWidth={"sm"}
-      >
-        {movie.title}
-      </CustomText>
-    </Box>
+        <CustomText
+          fontFamilyProps="REGULAR"
+          fontSize="xl"
+          textAlign="center"
+          numberOfLines={1}
+          maxWidth={"sm"}
+        >
+          {movie.title}
+        </CustomText>
+      </Pressable>
+    </Link>
   );
 }

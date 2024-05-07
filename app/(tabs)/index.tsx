@@ -56,19 +56,7 @@ export default function HomeScreen() {
           initialNumToRender={2}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box paddingRight={2} />}
-          renderItem={({ item }) => (
-            <Link
-              href={{
-                pathname: "/movie/[id]",
-                params: { id: item.id },
-              }}
-              asChild
-            >
-              <Pressable>
-                <MovieTrendingItem movie={item} />
-              </Pressable>
-            </Link>
-          )}
+          renderItem={({ item }) => <MovieTrendingItem movie={item} />}
         />
       </VStack>
 
