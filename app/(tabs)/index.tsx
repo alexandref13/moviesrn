@@ -50,6 +50,7 @@ export default function HomeScreen() {
         </CustomText>
         <FlatList
           data={trendingMovies}
+          keyExtractor={(item) => item.id.toString()}
           horizontal
           initialNumToRender={2}
           showsHorizontalScrollIndicator={false}
@@ -64,6 +65,7 @@ export default function HomeScreen() {
         </CustomText>
         <FlatList
           data={allMovies}
+          keyExtractor={(item) => item.id.toString()}
           horizontal
           initialNumToRender={5}
           showsHorizontalScrollIndicator={false}

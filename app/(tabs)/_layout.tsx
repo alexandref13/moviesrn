@@ -1,9 +1,8 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { useTheme } from "native-base";
 
-import Colors from "@/constants/Colors";
-import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 
 function TabBarIcon(props: {
@@ -14,12 +13,12 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { colors } = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: colors.info[700],
         headerShown: useClientOnlyValue(false, true),
       }}
     >
@@ -28,20 +27,6 @@ export default function TabLayout() {
         options={{
           title: "Movies",
           tabBarIcon: ({ color }) => <TabBarIcon name="film" color={color} />,
-          // headerRight: () => (
-          //   <Link href="/modal" asChild>
-          //     <Pressable>
-          //       {({ pressed }) => (
-          //         <FontAwesome
-          //           name="info-circle"
-          //           size={25}
-          //           color={Colors[colorScheme ?? "light"].text}
-          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-          //         />
-          //       )}
-          //     </Pressable>
-          //   </Link>
-          // ),
         }}
       />
       <Tabs.Screen
@@ -51,6 +36,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bookmark" color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
     </Tabs>

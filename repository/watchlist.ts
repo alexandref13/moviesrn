@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
 
 
-export async function getWatchListMovies(pageParam: number ){
+export async function getWatchListMovies(pageParam: number){
   const response = await api.get(
     `/account/${process.env.EXPO_PUBLIC_API_KEY}/watchlist/movies?page=${pageParam}&sort_by=created_at.asc`
   );

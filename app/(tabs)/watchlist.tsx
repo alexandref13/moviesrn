@@ -51,6 +51,7 @@ export default function WatchListScreen() {
   return (
     <FlatList
       data={data}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <WatchListItem movie={item} />}
       ItemSeparatorComponent={() => <Divider marginY={2} />}
       ListFooterComponent={() => <Divider marginY={2} />}
