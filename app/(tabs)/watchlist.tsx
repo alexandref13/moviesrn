@@ -1,20 +1,26 @@
-import { Box, Center, Divider, FlatList } from "native-base";
-import { useQuery } from "@tanstack/react-query";
+import { Center, Divider, FlatList } from "native-base";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
 import { getWatchListMovies } from "@/repository/watchlist";
 import { WatchListItem } from "@/components/WatchListItem";
+import { Movie } from "@/types/movies";
 
 export default function WatchListScreen() {
   const {
     data: watchlist,
-    isLoading,
     error,
-  } = useQuery({
+    isLoading,
+    fetchNextPage,
+  } = useInfiniteQuery({
     queryKey: ["movies:watchlist"],
-    queryFn: getWatchListMovies,
+    queryFn: ({ pageParam }) => getWatchListMovies(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (_, pages) => pages.length + 1,
   });
+
+  const data = watchlist?.pages.flat() as Movie[];
 
   if (isLoading) {
     return (
@@ -34,7 +40,7 @@ export default function WatchListScreen() {
     );
   }
 
-  if (watchlist && watchlist.length === 0) {
+  if (data && data.length === 0) {
     return (
       <Center flex={1}>
         <CustomText>Add a movie to your WatchList</CustomText>
@@ -44,11 +50,14 @@ export default function WatchListScreen() {
 
   return (
     <FlatList
-      data={watchlist}
+      data={data}
       renderItem={({ item }) => <WatchListItem movie={item} />}
-      contentContainerStyle={{ paddingBottom: 24 }}
       ItemSeparatorComponent={() => <Divider marginY={2} />}
       ListFooterComponent={() => <Divider marginY={2} />}
+      contentContainerStyle={{ paddingBottom: 24 }}
+      onEndReached={() => {
+        fetchNextPage();
+      }}
     />
   );
 }

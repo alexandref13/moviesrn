@@ -5,6 +5,9 @@ export const api = axios.create({
   headers: {
     accept: 'application/json',
     'content-type': 'application/json'
+  },
+  params: {
+    "language": "pt-Br"
   }
 })
 

@@ -1,10 +1,9 @@
 import { api } from "@/services/api";
 
-import { Movie } from "@/types/movies";
 
-export async function getWatchListMovies(): Promise<Movie[]> {
+export async function getWatchListMovies(pageParam: number ){
   const response = await api.get(
-    `/account/${process.env.EXPO_PUBLIC_API_KEY}/watchlist/movies?language=pt-BR&page=1&sort_by=created_at.asc`
+    `/account/${process.env.EXPO_PUBLIC_API_KEY}/watchlist/movies?page=${pageParam}&sort_by=created_at.asc`
   );
 
   return response.data.results;
