@@ -1,5 +1,5 @@
 import { Center, Divider, FlatList } from "native-base";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
@@ -59,6 +59,7 @@ export default function WatchListScreen() {
       onEndReached={() => {
         fetchNextPage();
       }}
+      paddingTop="2"
     />
   );
 }

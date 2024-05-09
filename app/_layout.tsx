@@ -18,6 +18,7 @@ import * as SplashScreen from "expo-splash-screen";
 export { ErrorBoundary } from "expo-router";
 
 import { useColorScheme } from "@/components/useColorScheme";
+import { theme } from "@/config/theme";
 
 export const unstable_settings = {
   initialRouteName: "(tabs)",
@@ -56,7 +57,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={theme}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <QueryClientProvider client={queryClient}>
           <Stack>
