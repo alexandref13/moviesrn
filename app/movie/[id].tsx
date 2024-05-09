@@ -5,89 +5,31 @@ import {
   Image,
   Pressable,
   ScrollView,
-  useTheme,
-  useToast,
 } from "native-base";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
 
 import { CustomText } from "@/components/CustomText";
-import { getAMovie } from "@/repository/movies";
 import { Loading } from "@/components/Loading";
-import {
-  getWatchListMovies,
-  toggleMovieToWatchList,
-} from "@/repository/watchlist";
-import { Movie } from "@/types/movies";
 
-export default function MovieDetails() {
-  const queryClient = useQueryClient();
-  const { id }: { id: string } = useLocalSearchParams();
+import { useMovieDetails } from "@/hooks/useMovieDetails";
 
-  const { colors } = useTheme();
-  const toast = useToast();
-
+export default function MovieDetailsScreen() {
   const {
-    data: movie,
-    isLoading: movieIsLoading,
-    error: movieError,
-  } = useQuery({ queryKey: ["movie", id], queryFn: () => getAMovie(id) });
+    movieIsLoading,
+    movieError,
+    movie,
+    watchlist,
+    watchlistError,
+    watchlistIsLoading,
+    watchlistMutateIsPending,
+    mutationError,
+    colors,
+    watchlistMutate,
+    hasIdInWatchlistMovies,
+  } = useMovieDetails();
 
-  const {
-    data,
-    isLoading: watchlistIsLoading,
-    error: watchlistError,
-  } = useInfiniteQuery({
-    queryKey: ["movies:watchlist"],
-    queryFn: ({ pageParam }) => getWatchListMovies(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (_, pages) => pages.length + 1,
-  });
-
-  const watchlist = data?.pages.flat();
-
-  function hasIdInWatchlistMovies(watchList: Movie[] | undefined) {
-    if (!watchList) {
-      return false;
-    }
-
-    const filteredWatchList = watchlist?.filter(
-      (movie) => movie.id === Number(id)
-    );
-
-    if (!filteredWatchList) {
-      return false;
-    }
-
-    return filteredWatchList?.length > 0;
-  }
-
-  const {
-    mutate,
-    error: mutationError,
-    isPending,
-  } = useMutation({
-    mutationFn: () =>
-      toggleMovieToWatchList(id, hasIdInWatchlistMovies(watchlist)),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["movies:watchlist"] });
-      toast.show({
-        title: hasIdInWatchlistMovies(watchlist)
-          ? "Movie removed of Watchlist"
-          : "Movie added to Watchlist",
-        placement: "top",
-        duration: 1000,
-      });
-    },
-  });
-
-  if (movieIsLoading || watchlistIsLoading || isPending) {
+  if (movieIsLoading || watchlistIsLoading || watchlistMutateIsPending) {
     return (
       <Center flex={1} alignItems="center" justifyContent="center">
         <Loading />
@@ -131,7 +73,7 @@ export default function MovieDetails() {
         >
           {movie?.title}
         </CustomText>
-        <Pressable marginRight="2" onPress={() => mutate()}>
+        <Pressable marginRight="2" onPress={() => watchlistMutate()}>
           <FontAwesome
             name="bookmark"
             size={28}

@@ -1,50 +1,29 @@
-import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from "@expo/vector-icons";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  Button,
   Center,
   Divider,
   FlatList,
   HStack,
   Input,
   Pressable,
-  useTheme,
-  useToast,
 } from "native-base";
-import { searchMovie } from "@/repository/search";
 import { Loading } from "@/components/Loading";
 import { CustomText } from "@/components/CustomText";
 import { WatchListItem } from "@/components/WatchListItem";
+import { useSearch } from "@/hooks/useSearch";
 
 export default function SearchScreen() {
-  const [movie, setMovie] = useState("");
-  const [search, setSearch] = useState(false);
-
-  const toast = useToast();
-  const { colors } = useTheme();
-
-  const queryClient = useQueryClient();
-
   const {
-    data: movieSearched,
-    isLoading,
+    colors,
     error,
     fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["movies:search", movie],
-    queryFn: ({ pageParam }) => searchMovie(movie, pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (_, pages) => pages.length + 1,
-    enabled: search,
-  });
-
-  const data = movieSearched?.pages.flat();
-
-  useEffect(() => {
-    setSearch(false);
-  }, [movie]);
+    isLoading,
+    movie,
+    movieSearched,
+    setMovie,
+    handleSearch,
+  } = useSearch();
 
   if (error) {
     return (
@@ -76,21 +55,7 @@ export default function SearchScreen() {
           onChangeText={setMovie}
         />
 
-        <Pressable
-          onPress={() => {
-            if (movie.length < 3) {
-              toast.show({
-                title: "Must have a least 3 letters to find movies",
-                placement: "top",
-                duration: 2000,
-              });
-              return;
-            }
-            setSearch((prevState) => !prevState);
-
-            queryClient.cancelQueries({ queryKey: ["movies:search", movie] });
-          }}
-        >
+        <Pressable onPress={handleSearch}>
           <FontAwesome name="search" size={28} color={colors.info[700]} />
         </Pressable>
       </HStack>
@@ -101,7 +66,7 @@ export default function SearchScreen() {
         </Center>
       ) : (
         <FlatList
-          data={data}
+          data={movieSearched}
           renderItem={({ item }) => <WatchListItem movie={item} />}
           ItemSeparatorComponent={() => <Divider marginY={2} />}
           ListFooterComponent={() => <Divider marginY={2} />}

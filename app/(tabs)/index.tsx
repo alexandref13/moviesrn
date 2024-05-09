@@ -1,25 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
 import { Box, Center, FlatList, ScrollView, VStack } from "native-base";
 
 import { CustomText } from "@/components/CustomText";
 import { Loading } from "@/components/Loading";
-import { getAllMovies, getTrendingMovies } from "@/repository/movies";
-
 import { MovieTrendingItem } from "@/components/MovieTrendingItem";
 import { GeneralMovieItem } from "@/components/GeneralMovieItem";
 
+import useHome from "@/hooks/useHome";
+
 export default function HomeScreen() {
   const {
-    data: trendingMovies,
-    isLoading: trendingMoviesIsLoading,
-    error: trendingMoviesError,
-  } = useQuery({ queryKey: ["movies:trending"], queryFn: getTrendingMovies });
-
-  const {
-    data: allMovies,
-    isLoading: allMoviesIsLoading,
-    error: allMoviesError,
-  } = useQuery({ queryKey: ["movies:all"], queryFn: getAllMovies });
+    trendingMovies,
+    trendingMoviesError,
+    trendingMoviesIsLoading,
+    allMovies,
+    allMoviesError,
+    allMoviesIsLoading,
+  } = useHome();
 
   if (trendingMoviesIsLoading || allMoviesIsLoading) {
     return (
