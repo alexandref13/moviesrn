@@ -4,6 +4,7 @@ import {
   toggleMovieToWatchList,
 } from "@/repository/watchlist";
 import { Movie } from "@/types/movies";
+import { useToast } from "@/utils/toast";
 import {
   useInfiniteQuery,
   useMutation,
@@ -11,14 +12,14 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import { useTheme, useToast } from "native-base";
+import { useTheme } from "native-base";
 
 export function useMovieDetails() {
   const queryClient = useQueryClient();
   const { id }: { id: string } = useLocalSearchParams();
 
   const { colors } = useTheme();
-  const toast = useToast();
+  const { showToast } = useToast();
 
   const {
     data: movie,
@@ -64,12 +65,11 @@ export function useMovieDetails() {
       toggleMovieToWatchList(id, hasIdInWatchlistMovies(watchlist)),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["movies:watchlist"] });
-      toast.show({
-        title: hasIdInWatchlistMovies(watchlist)
+      showToast({
+        message: hasIdInWatchlistMovies(watchlist)
           ? "Movie removed of Watchlist"
           : "Movie added to Watchlist",
-        placement: "top",
-        duration: 1000,
+        backgroundColor: colors.emerald[500],
       });
     },
   });
